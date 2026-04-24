@@ -1,0 +1,8 @@
+node_modules
+dist
+dist-electron
+build
+release
+.env
+.server.log
+.renderer.log

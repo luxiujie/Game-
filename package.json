@@ -1,0 +1,88 @@
+{
+  "name": "nexus-relay-starter",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "productName": "Game++",
+  "main": "dist-electron/electron/main.js",
+  "scripts": {
+    "dev": "concurrently -k -n renderer,electron-build,electron -c magenta,cyan,yellow \"npm:dev:renderer\" \"npm:dev:electron:build\" \"npm:dev:electron:run\"",
+    "dev:renderer": "node scripts/dev-renderer.mjs",
+    "dev:electron:build": "npm run prepare:electron && tsc -p tsconfig.electron.json --watch --preserveWatchOutput",
+    "dev:electron:run": "node scripts/dev-electron-run.mjs",
+    "prepare:assets": "node scripts/prepare-icons.mjs",
+    "prepare:electron": "node scripts/sync-electron-package.mjs",
+    "build": "npm run build:renderer && npm run build:electron",
+    "build:renderer": "vite build",
+    "build:electron": "npm run prepare:electron && tsc -p tsconfig.electron.json",
+    "check": "tsc --noEmit && tsc -p tsconfig.electron.json --noEmit",
+    "start": "electron dist-electron/electron/main.js",
+    "dist:win": "npm run build && npm run prepare:assets && node scripts/run-electron-builder.mjs --win nsis",
+    "dist:win:dir": "npm run build && npm run prepare:assets && node scripts/run-electron-builder.mjs --win dir"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "Electron desktop skeleton for browsing Nexus Mods, authenticating with SSO, and dispatching downloads locally.",
+  "build": {
+    "appId": "com.gameplusplus.desktop",
+    "productName": "Game++",
+    "artifactName": "Game++-Setup-${version}.${ext}",
+    "electronDist": "node_modules/electron/dist",
+    "directories": {
+      "output": "release",
+      "buildResources": "build"
+    },
+    "extraResources": [
+      {
+        "from": "logo.png",
+        "to": "logo.png"
+      }
+    ],
+    "win": {
+      "icon": "build/icon.ico",
+      "target": [
+        {
+          "target": "nsis",
+          "arch": [
+            "x64"
+          ]
+        }
+      ]
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "installerIcon": "build/icon.ico",
+      "uninstallerIcon": "build/icon.ico",
+      "installerHeaderIcon": "build/icon.ico",
+      "shortcutName": "Game++"
+    }
+  },
+  "dependencies": {
+    "dotenv": "^17.4.2",
+    "express": "^5.2.1",
+    "express-session": "^1.19.0",
+    "lucide-react": "^1.9.0",
+    "react": "^19.2.5",
+    "react-dom": "^19.2.5",
+    "ws": "^8.20.0"
+  },
+  "devDependencies": {
+    "@types/express": "^5.0.6",
+    "@types/express-session": "^1.19.0",
+    "@types/node": "^25.6.0",
+    "@types/react": "^19.2.14",
+    "@types/react-dom": "^19.2.3",
+    "@types/ws": "^8.18.1",
+    "@vitejs/plugin-react": "^4.7.0",
+    "concurrently": "^9.2.1",
+    "electron": "^41.3.0",
+    "electron-builder": "^26.8.1",
+    "png-to-ico": "^2.1.8",
+    "tsx": "^4.21.0",
+    "typescript": "^6.0.3",
+    "vite": "^5.4.19",
+    "wait-on": "^8.0.5"
+  }
+}
