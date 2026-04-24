@@ -1,104 +1,103 @@
-# Game++ Desktop for Nexus Mods
+# Game++
 
-Game++ is a Windows desktop application built with Electron, React, and TypeScript to provide a local-first Nexus Mods experience. It is designed to help users sign in with their Nexus Mods account, browse supported games and mods, receive `nxm://` protocol callbacks, and manage local downloads from a dedicated desktop interface.
+Game++ is a Windows desktop client for working with Nexus Mods in a more local, desktop-oriented way.
 
-This repository is currently under active development. The project already includes the core desktop shell, local account flow, download orchestration, persistent queue/history management, and protocol handoff handling, while some network-routing features are still being expanded.
+The project is built with Electron, React, and TypeScript, and focuses on a few practical pieces of the Nexus workflow: signing in, browsing games and mods, handling `nxm://` callbacks, and coordinating local downloads from the desktop instead of leaving everything to the browser.
 
-## Project Goals
+It is still an active work in progress, but the core application shell and several key flows are already in place.
 
-- Provide a desktop-native workflow for Nexus Mods users on Windows
-- Support official Nexus Mods account authentication for in-app user access
-- Handle `nxm://` links locally so download actions can return to the desktop app
-- Keep account credentials, session state, and download state on the user's own machine
-- Build a foundation for future download-source expansion and desktop-side automation
+## What It Does
 
-## Current Capabilities
-
-- Electron desktop shell with React renderer
-- Nexus Mods account connection
-  - Personal API key login
-  - OAuth / SSO-style desktop handoff flow scaffold
-- Game list, mod overview, and mod detail browsing
-- Local download dispatch flow
-  - Premium users can use direct desktop download flow
-  - Non-premium users can be redirected to the browser and returned through `nxm://`
+- desktop UI for browsing Nexus-related content
+- local account connection flow
 - `nxm://` protocol registration and callback handling
-- Persistent download queue, history, and recent protocol events
-- Local settings management for download directory, retries, and network behavior
-- Proxy configuration UI with system, built-in, and custom proxy modes
+- download queue and history management
+- local persistence for app settings and session state
+- network configuration for retry and proxy behavior
 
-## Authentication and OAuth Use
+## Why This Project Exists
 
-This project requests an official Nexus Mods application identity so users can sign in from within the desktop app instead of relying only on manually pasted API keys.
+Browser-based mod flows are fine for quick use, but desktop tools are still useful when you want tighter control over local downloads, protocol handoff, and application state.
 
-The intended OAuth use case is:
+Game++ is an attempt to build that kind of desktop foundation in a clean and modern stack, with enough structure to keep expanding into a fuller Windows client over time.
 
-- open the official Nexus Mods authorization flow from the desktop app
-- let the user approve access with their own Nexus Mods account
-- receive the authorization result locally in the desktop application
-- store the resulting local session only on the user's machine
-- use that session only to access Nexus Mods features that the user has explicitly authorized
+Longer term, the project is also meant to grow into game-specific local mod management for selected titles. For games such as Black Myth: Wukong and Black Myth: Zhong Kui, the plan is for Game++ to handle local mods more directly and provide simpler one-click install and one-click uninstall workflows.
 
-The application does not aim to resell, mirror, or publicly redistribute Nexus Mods content. Its purpose is to provide a desktop client experience for browsing and download handoff initiated by the end user.
+## Current State
 
-## Privacy and Security Notes
+Already working:
 
-- User credentials and session data are stored locally on the user's device
-- When available, Electron safe storage is used for local secret protection
-- Download state, settings, and protocol events are persisted locally
-- The app does not require a public third-party account dashboard for routine use
-- The project is intended to act as a client for the authenticated end user, not as a credential-sharing service
+- Electron desktop shell
+- React renderer and shared typed contracts
+- Nexus account connection via personal API key
+- desktop-side SSO / OAuth-style flow scaffold
+- game list, mod overview, and mod detail requests
+- direct download orchestration for supported cases
+- browser handoff plus `nxm://` return flow for other cases
+- local queue, history, and recent callback persistence
 
-## Technical Overview
+Still evolving:
 
-- Frontend: React + TypeScript + Vite
-- Desktop shell: Electron
-- Shared contracts: TypeScript interfaces shared across renderer and desktop service
-- Local service layer: desktop-side orchestration for auth, downloads, queue state, and protocol callbacks
-- Nexus integration: API client and OAuth / SSO helper flow
+- built-in proxy endpoint integration
+- game-specific local mod management for selected titles
+- one-click install and uninstall flows for supported games
+- broader install / post-download workflows
+- more complete release polish for wider public use
 
-Key folders:
+## Tech Stack
 
-- `src/`: renderer UI
-- `electron/`: desktop runtime, IPC, persistence, download handling, protocol routing
-- `server/`: reusable Nexus API and OAuth/SSO integration logic
-- `shared/`: shared TypeScript contracts
+- Electron
+- React
+- TypeScript
+- Vite
+- Express for local service helpers where needed
+
+## Project Structure
+
+- `src/` - renderer UI
+- `electron/` - desktop runtime, IPC, persistence, download handling, protocol integration
+- `server/` - Nexus API and auth-related helper logic
+- `shared/` - shared TypeScript contracts
+- `scripts/` - development and packaging utilities
+
+## Local-First Behavior
+
+Game++ is designed as a desktop client, so account state, settings, queue state, and download metadata are kept on the user's machine rather than managed through a hosted dashboard.
+
+When platform support is available, local secure storage APIs are used to protect sensitive values.
 
 ## Development
 
+Install dependencies:
+
 ```bash
 npm install
+```
+
+Start the desktop app in development mode:
+
+```bash
 npm run dev
 ```
 
-Build the project:
+Build the renderer and Electron bundles:
 
 ```bash
 npm run build
 ```
 
-## Current Status
+Create a Windows package:
 
-This project is a working desktop prototype / foundation rather than a fully finished public release.
+```bash
+npm run dist:win
+```
 
-Implemented today:
+## Notes
 
-- desktop UI shell
-- local account connection flow
-- `nxm://` registration and callback handling
-- download queue and history persistence
-- local file download orchestration
-
-Still being expanded:
-
-- full production-ready OAuth flow polish
-- built-in proxy endpoint list integration from a backend service
-- additional installation and post-download workflows
-
-## Intended Audience
-
-Game++ is intended for Nexus Mods users who want a desktop-first workflow for browsing content, authenticating locally, and managing download handoff in a dedicated Windows application.
+- This project targets Windows desktop usage first.
+- Browser preview mode is useful for UI work, but desktop-only features such as protocol registration and local download orchestration require Electron.
+- Some network-routing features are present in the UI and desktop runtime, with built-in proxy source integration planned as a later step.
 
 ## Disclaimer
 
-This is an independent software project and is not affiliated with, endorsed by, or maintained by Nexus Mods.
+Game++ is an independent project and is not affiliated with or endorsed by Nexus Mods.
