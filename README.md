@@ -1,103 +1,106 @@
 # Game++
 
-Game++ is a Windows desktop client for working with Nexus Mods in a more local, desktop-oriented way.
+🚀 A lightweight and modern desktop mod manager for Nexus Mods.
 
-The project is built with Electron, React, and TypeScript, and focuses on a few practical pieces of the Nexus workflow: signing in, browsing games and mods, handling `nxm://` callbacks, and coordinating local downloads from the desktop instead of leaving everything to the browser.
+Game++ is designed to provide a clean, fast, and reliable experience for managing game mods locally, while fully respecting the Nexus Mods ecosystem and API policies.
 
-It is still an active work in progress, but the core application shell and several key flows are already in place.
+---
 
-## What It Does
+## ✨ Features
 
-- desktop UI for browsing Nexus-related content
-- local account connection flow
-- `nxm://` protocol registration and callback handling
-- download queue and history management
-- local persistence for app settings and session state
-- network configuration for retry and proxy behavior
+* 🔍 Browse and search mods from Nexus Mods
+* ⬇️ Download mods directly via Nexus Mods API
+* 📦 Install and manage mods locally
+* 🔄 Check for updates
+* ⚙️ Enable / disable mods
+* ⚠️ Basic conflict detection between mods
+* 🧩 Clean and modern UI built with React
 
-## Why This Project Exists
+---
 
-Browser-based mod flows are fine for quick use, but desktop tools are still useful when you want tighter control over local downloads, protocol handoff, and application state.
+## 🛠 Tech Stack
 
-Game++ is an attempt to build that kind of desktop foundation in a clean and modern stack, with enough structure to keep expanding into a fuller Windows client over time.
+* **Electron** – Cross-platform desktop runtime
+* **React** – UI framework
+* **TypeScript** – Type-safe development
 
-Longer term, the project is also meant to grow into game-specific local mod management for selected titles. For games such as Black Myth: Wukong and Black Myth: Zhong Kui, the plan is for Game++ to handle local mods more directly and provide simpler one-click install and one-click uninstall workflows.
+---
 
-## Current State
+## 📦 Installation
 
-Already working:
-
-- Electron desktop shell
-- React renderer and shared typed contracts
-- Nexus account connection via personal API key
-- desktop-side SSO / OAuth-style flow scaffold
-- game list, mod overview, and mod detail requests
-- direct download orchestration for supported cases
-- browser handoff plus `nxm://` return flow for other cases
-- local queue, history, and recent callback persistence
-
-Still evolving:
-
-- built-in proxy endpoint integration
-- game-specific local mod management for selected titles
-- one-click install and uninstall flows for supported games
-- broader install / post-download workflows
-- more complete release polish for wider public use
-
-## Tech Stack
-
-- Electron
-- React
-- TypeScript
-- Vite
-- Express for local service helpers where needed
-
-## Project Structure
-
-- `src/` - renderer UI
-- `electron/` - desktop runtime, IPC, persistence, download handling, protocol integration
-- `server/` - Nexus API and auth-related helper logic
-- `shared/` - shared TypeScript contracts
-- `scripts/` - development and packaging utilities
-
-## Local-First Behavior
-
-Game++ is designed as a desktop client, so account state, settings, queue state, and download metadata are kept on the user's machine rather than managed through a hosted dashboard.
-
-When platform support is available, local secure storage APIs are used to protect sensitive values.
-
-## Development
-
-Install dependencies:
+### Development
 
 ```bash
+# Clone the repository
+git clone https://github.com/luxiujie/Game-
+
+# Install dependencies
 npm install
-```
 
-Start the desktop app in development mode:
-
-```bash
+# Run the app
 npm run dev
 ```
 
-Build the renderer and Electron bundles:
+---
 
-```bash
-npm run build
-```
+## 🔐 Authentication
 
-Create a Windows package:
+Game++ uses **OAuth 2.0 with PKCE** to authenticate with Nexus Mods.
 
-```bash
-npm run dist:win
-```
+* No user credentials are stored
+* All authentication is handled securely via Nexus Mods
 
-## Notes
+---
 
-- This project targets Windows desktop usage first.
-- Browser preview mode is useful for UI work, but desktop-only features such as protocol registration and local download orchestration require Electron.
-- Some network-routing features are present in the UI and desktop runtime, with built-in proxy source integration planned as a later step.
+## ⚠️ Disclaimer
 
-## Disclaimer
+Game++ is a third-party tool and is **not affiliated with Nexus Mods**.
 
-Game++ is an independent project and is not affiliated with or endorsed by Nexus Mods.
+This application:
+
+* Respects Nexus Mods API rate limits
+* Does NOT bypass premium features or restrictions
+* Does NOT perform scraping or abusive requests
+
+---
+
+## 🧪 Project Status
+
+🚧 Early-stage development
+
+Core features are being actively built. Contributions and feedback are welcome.
+
+---
+
+## 📌 Roadmap
+
+* [ ] Mod installation system
+* [ ] Download manager (queue + resume)
+* [ ] Conflict resolution UI
+* [ ] Game auto-detection
+* [ ] Plugin/load order management
+* [ ] Performance optimization
+
+---
+
+## 🤝 Contributing
+
+Contributions are welcome!
+
+If you have ideas, suggestions, or improvements:
+
+* Open an issue
+* Submit a pull request
+
+---
+
+## 📧 Contact
+
+* Author: ManTou
+* Email: [lxj250200@163.com](mailto:lxj250200@163.com)
+
+---
+
+## ⭐ Support
+
+If you find this project useful, consider giving it a star ⭐
